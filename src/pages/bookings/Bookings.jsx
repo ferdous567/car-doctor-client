@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import BookingRow from "./BookingRow";
-import axios from "axios";
+// import axios from "axios";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 // import Booking from "../booking/Booking";
 
 const Bookings = () => {
@@ -9,24 +10,35 @@ const Bookings = () => {
 
     const { user } = useContext(AuthContext);
 
-    const url = `http://localhost:5000/bookings?email=${user?.email}`;
+    const axiosSecure = useAxiosSecure();
+
+    const url = `https://car-doctor-server-silk-seven.vercel.app/bookings?email=${user?.email}`;
 
     useEffect(() => {
 
-        axios.get(url, {withCredentials: true})
-        .then(res =>{
-            setBookings(res.data)
-        })
+        // axios.get(url, {withCredentials: true})
+        // .then(res =>{
+        //     setBookings(res.data)
+        // })
+
+        /////////////////////////////////
 
         // fetch(url, {credentials: 'include'})
         //     .then(res => res.json())
         //     .then(data => setBookings(data))
-    }, [url]);
+
+        //////////////////////////////////
+
+        axiosSecure.get(url)
+        .then(res => setBookings(res.data))
+
+
+    }, [url, axiosSecure]);
 
     const handleDelete = id =>{
         const proceed = confirm('Are you sure you want to delete?');
         if(proceed){
-            fetch(`http://localhost:5000/bookings/${id}`,{
+            fetch(`https://car-doctor-server-silk-seven.vercel.app/bookings/${id}`,{
                 method: 'DELETE'
             })
             .then(res => res.json())
@@ -42,7 +54,7 @@ const Bookings = () => {
     }
 
     const handleConfirm = id =>{
-        fetch(`http://localhost:5000/bookings/${id}`,{
+        fetch(`https://car-doctor-server-silk-seven.vercel.app/bookings/${id}`,{
             method: 'PATCH',
             headers:{
                 'content-type': 'application/json',

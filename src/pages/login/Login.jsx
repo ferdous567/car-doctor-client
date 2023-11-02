@@ -26,7 +26,7 @@ const Login = () => {
             const user = { email };
             
             // get access token
-           axios.post('http://localhost:5000/jwt', user, {withCredentials: true})
+           axios.post('https://car-doctor-server-silk-seven.vercel.app/jwt', user, {withCredentials: true})
            .then(res =>{
             console.log(res.data)
             if(res.data.success){
@@ -48,7 +48,7 @@ const Login = () => {
                 </div>
                 <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
                     <form onSubmit={handleSignIn} className="card-body">
-                        <h2 className='text-2xl font-bold'>Login Here</h2>
+                        <h2 className='text-2xl font-bold'>Login Here Now..</h2>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
